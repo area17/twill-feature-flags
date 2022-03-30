@@ -3,7 +3,11 @@
 
 ### Description
 
-This Capsule allows you to easily enable/disable features on your application.
+This Capsule allows you to easily enable/disable features on your application. Features not flagged to be available publicly will still be available on non-public domains. This way company staff and QA teams can still test these features on hiden domains, even if they are served by the same server/database.
+
+![Screenshot 1](docs/screenshot01.png)
+
+![Screenshot 2](docs/screenshot02.png)
 
 ## Installing
 
