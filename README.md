@@ -74,7 +74,7 @@ And, on your code, you can just use the helper to show/hide features from your w
 
 ``` php 
 if (feature('booking')) {
-    require __DIR__ . '/routes.php';
+    // whatever your feature has to do
 }
 ```
 
