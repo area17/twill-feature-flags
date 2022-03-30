@@ -1,0 +1,23 @@
+{
+  "name": "area17/twill-capsule-feature-flags",
+  "description": "A Twill Capsule to handle application feature flags",
+  "homepage": "https://github.com/area17/twill-capsule-feature-flags",
+  "license": "MIT",
+  "require": {
+    "area17/twill": "^2.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "TwillFeatureFlags\\": "src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "TwillFeatureFlags\\TwillFeatureFlagsServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
