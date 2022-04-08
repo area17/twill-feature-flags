@@ -2,6 +2,7 @@
 
 namespace App\Twill\Capsules\FeatureFlags\Repositories;
 
+use Illuminate\Support\Str;
 use A17\Twill\Repositories\ModuleRepository;
 use A17\Twill\Repositories\Behaviors\HandleRevisions;
 use App\Twill\Capsules\FeatureFlags\Models\FeatureFlag;
@@ -28,11 +29,15 @@ class FeatureFlagRepository extends ModuleRepository
             return false;
         }
 
+        if ($featureFlag->publicly_available) {
+            return true;
+        }
+
         if (!$this->isRealProduction() || $this->isPubliclyAvailableToCurrentUser($featureFlag)) {
             return true;
         }
 
-        return $featureFlag->publicly_available;
+        return $this->isRunningOnTwill();
     }
 
     private function isRealProduction(): bool
@@ -56,5 +61,25 @@ class FeatureFlagRepository extends ModuleRepository
                 ->map(fn($ip) => trim($ip))
                 ->toArray(),
         );
+    }
+
+    public function isRunningOnTwill(): bool
+    {
+        $twillUrlPrefix = config('twill.admin_app_url');
+
+        if (filled($path = config('twill.admin_app_path'))) {
+            $twillUrlPrefix .= "/$path";
+        }
+
+        $twillUrlPrefix .= '/';
+
+        if (!Str::startsWith($twillUrlPrefix, ['http', 'https'])) {
+            $twillUrlPrefix = "https://$twillUrlPrefix";
+        }
+
+        $current = parse_url(url()->full());
+        $twill = parse_url($twillUrlPrefix);
+
+        return $current['host'] === $twill['host'] && Str::startsWith($current['path'], $twill['path']);
     }
 }
