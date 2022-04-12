@@ -80,6 +80,6 @@ class FeatureFlagRepository extends ModuleRepository
         $current = parse_url(url()->full());
         $twill = parse_url($twillUrlPrefix);
 
-        return $current['host'] === $twill['host'] && Str::startsWith($current['path'], $twill['path']);
+        return $current['host'] === $twill['host'] && Str::startsWith($current['path'] ?? '/', $twill['path'] ?? '/');
     }
 }
