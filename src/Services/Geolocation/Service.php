@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twill\Capsules\FeatureFlags\Services\Geolocation;
+namespace A17\TwillFeatureFlags\Services\Geolocation;
 
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\IpUtils;

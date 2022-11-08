@@ -8,13 +8,13 @@
   },
   "autoload": {
     "psr-4": {
-      "TwillFeatureFlags\\": "src"
+      "A17\\TwillFeatureFlags\\": "src"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "TwillFeatureFlags\\TwillFeatureFlagsServiceProvider"
+        "A17\\TwillFeatureFlags\\ServiceProvider"
       ]
     }
   },

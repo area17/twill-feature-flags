@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twill\Capsules\FeatureFlags\Services;
+namespace A17\TwillFeatureFlags\Services;
 
 class Helpers
 {

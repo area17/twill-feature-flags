@@ -8,7 +8,7 @@ class CreateFeatureFlagsTables extends Migration
 {
     public function up(): void
     {
-        Schema::create('feature_flags', function (Blueprint $table) {
+        Schema::create('twill_feature_flags', function (Blueprint $table) {
             // this will create an id, a "published" column, and soft delete and timestamps columns
             createDefaultTableFields($table);
 
@@ -23,14 +23,14 @@ class CreateFeatureFlagsTables extends Migration
             $table->text('ip_addresses')->nullable();
         });
 
-        Schema::create('feature_flag_revisions', function (Blueprint $table) {
-            createDefaultRevisionsTableFields($table, 'feature_flag');
+        Schema::create('twill_feature_flag_revisions', function (Blueprint $table) {
+            createDefaultRevisionsTableFields($table, 'twill_feature_flag');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('feature_flag_revisions');
-        Schema::dropIfExists('feature_flags');
+        Schema::dropIfExists('twill_feature_flag_revisions');
+        Schema::dropIfExists('twill_feature_flags');
     }
 }

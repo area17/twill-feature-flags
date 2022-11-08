@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twill\Capsules\FeatureFlags\Repositories;
+namespace A17\TwillFeatureFlags\Repositories;
 
 class Cache
 {

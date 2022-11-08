@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twill\Capsules\FeatureFlags\Models;
+namespace A17\TwillFeatureFlags\Models;
 
 use A17\Twill\Models\Model;
 use Illuminate\Support\Str;
@@ -15,7 +15,7 @@ use A17\Twill\Models\Behaviors\HasRevisions;
  * @property string|null $publicly_available_ips
  * @property bool $published
  */
-class FeatureFlag extends Model
+class TwillFeatureFlag extends Model
 {
     use HasRevisions;
 

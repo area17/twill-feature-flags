@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Twill\Capsules\FeatureFlags\Repositories;
+namespace A17\TwillFeatureFlags\Repositories;
 
 use Throwable;
 use Illuminate\Support\Collection;
-use App\Twill\Capsules\Base\ModuleRepository;
+use A17\Twill\Repositories\ModuleRepository;
+use A17\TwillFeatureFlags\Models\TwillFeatureFlag;
 use A17\Twill\Repositories\Behaviors\HandleRevisions;
-use App\Twill\Capsules\FeatureFlags\Models\FeatureFlag;
-use App\Twill\Capsules\FeatureFlags\Services\Geolocation\Service as GeolocationService;
+use A17\TwillFeatureFlags\Services\Geolocation\Service as GeolocationService;
 
-class FeatureFlagRepository extends ModuleRepository
+class TwillFeatureFlagRepository extends ModuleRepository
 {
     use HandleRevisions;
 
-    public function __construct(FeatureFlag $model = null)
+    public function __construct(TwillFeatureFlag $model = null)
     {
         $this->bootCache();
 
-        $this->model = $model ?? new FeatureFlag();
+        $this->model = $model ?? new TwillFeatureFlag();
     }
 
     public function feature(string $code): bool
@@ -34,7 +34,7 @@ class FeatureFlagRepository extends ModuleRepository
     public function getFeature(string $code): bool
     {
         try {
-            /** @var \App\Twill\Capsules\FeatureFlags\Models\FeatureFlag|null $featureFlag */
+            /** @var \A17\TwillFeatureFlags\Models\TwillFeatureFlag|null $featureFlag */
             $featureFlag = FeatureFlag::where('code', $code)->first();
         } catch (Throwable) {
             return false;
@@ -65,7 +65,7 @@ class FeatureFlagRepository extends ModuleRepository
             ->toArray();
     }
 
-    private function isPubliclyAvailableToCurrentUser(FeatureFlag $featureFlag): bool
+    private function isPubliclyAvailableToCurrentUser(TwillFeatureFlag $featureFlag): bool
     {
         return (new GeolocationService())->currentIpAddressIsOnList(
             collect(explode(',', $featureFlag->ip_addresses))

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Twill\Capsules\FeatureFlags\Http\Requests;
+namespace A17\TwillFeatureFlags\Http\Requests;
 
 use A17\Twill\Http\Requests\Admin\Request;
 
-class FeatureFlagRequest extends Request
+class TwillFeatureFlagRequest extends Request
 {
     public function rulesForCreate(): array
     {

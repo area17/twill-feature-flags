@@ -11,13 +11,11 @@ This Capsule allows you to easily enable/disable features on your application. F
 
 ## Installing
 
-Clone the repository inside your app/Twill/Capsules folder. 
+Require the Composer package:
 
-```
-cd app/Twill/Capsules
-git clone https://github.com/area17/twill-capsule-feature-flags.git
-mv twill-capsule-feature-flags FeatureFlags
-```
+``` bash
+composer require area17/twill-feature-flags
+``` 
 
 Enable the Capsule in config/twill.php:
 

@@ -1,6 +1,6 @@
 <?php
 
-use App\Twill\Capsules\FeatureFlags\Repositories\FeatureFlagRepository;
+use A17\TwillFeatureFlags\Repositories\FeatureFlagRepository;
 
 if (!function_exists('feature')) {
     function feature(string $code): bool

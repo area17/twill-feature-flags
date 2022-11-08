@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Twill\Capsules\FeatureFlags\Http\Controllers;
+namespace A17\TwillFeatureFlags\Http\Controllers;
 
 use A17\Twill\Http\Controllers\Admin\ModuleController;
 
-class FeatureFlagController extends ModuleController
+class TwillFeatureFlagController extends ModuleController
 {
-    protected $moduleName = 'featureFlags';
+    protected $moduleName = 'twillFeatureFlags';
 
     protected $indexOptions = [
         'permalink' => false,
@@ -32,5 +32,5 @@ class FeatureFlagController extends ModuleController
         ],
     ];
 
-    public $previewView = Templates::NO_PREVIEW;
+    // public $previewView = Templates::NO_PREVIEW;
 }

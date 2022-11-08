@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Twill\Capsules\FeatureFlags\Database\Seeds;
+namespace A17\TwillFeatureFlags\Database\Seeds;
 
 use Illuminate\Database\Seeder;
 
