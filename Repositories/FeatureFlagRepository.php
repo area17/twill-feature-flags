@@ -2,47 +2,58 @@
 
 namespace App\Twill\Capsules\FeatureFlags\Repositories;
 
-use Illuminate\Support\Str;
-use A17\Twill\Repositories\ModuleRepository;
+use Throwable;
+use Illuminate\Support\Collection;
+use App\Twill\Capsules\Base\ModuleRepository;
 use A17\Twill\Repositories\Behaviors\HandleRevisions;
 use App\Twill\Capsules\FeatureFlags\Models\FeatureFlag;
-use App\Twill\Capsules\FeatureFlags\Services\Geolocation\Service;
+use App\Twill\Capsules\FeatureFlags\Services\Geolocation\Service as GeolocationService;
 
 class FeatureFlagRepository extends ModuleRepository
 {
     use HandleRevisions;
 
-    public function __construct(FeatureFlag $model)
+    public function __construct(FeatureFlag $model = null)
     {
-        $this->model = $model;
+        $this->bootCache();
+
+        $this->model = $model ?? new FeatureFlag();
     }
 
-    public function feature($code): bool
+    public function feature(string $code): bool
+    {
+        if (!is_null($result = $this->getFromCache($code))) {
+            return $result;
+        }
+
+        $this->putOnCache($code, $result = $this->getFeature($code));
+
+        return $result;
+    }
+
+    public function getFeature(string $code): bool
     {
         try {
-            $featureFlag = $this->model->where('code', $code)->first();
-        } catch (\Throwable $_) {
+            /** @var \App\Twill\Capsules\FeatureFlags\Models\FeatureFlag|null $featureFlag */
+            $featureFlag = FeatureFlag::where('code', $code)->first();
+        } catch (Throwable) {
             return false;
         }
 
-        if (blank($featureFlag) || !$featureFlag->published) {
+        if (blank($featureFlag) || blank($featureFlag?->published) || $featureFlag?->published === false) {
             return false;
-        }
-
-        if ($featureFlag->publicly_available) {
-            return true;
         }
 
         if (!$this->isRealProduction() || $this->isPubliclyAvailableToCurrentUser($featureFlag)) {
             return true;
         }
 
-        return $this->isRunningOnTwill();
+        return $featureFlag->publicly_available || $this->isRunningOnTwill();
     }
 
     private function isRealProduction(): bool
     {
-        return collect(config('app.domains.publicly_available'))->contains(request()->getHost());
+        return (new Collection(config('app.domains.publicly_available')))->contains(request()->getHost());
     }
 
     public function featureList(): array
@@ -54,13 +65,32 @@ class FeatureFlagRepository extends ModuleRepository
             ->toArray();
     }
 
-    private function isPubliclyAvailableToCurrentUser($featureFlag): bool
+    private function isPubliclyAvailableToCurrentUser(FeatureFlag $featureFlag): bool
     {
-        return app(Service::class)->currentIpAddressIsOnList(
+        return (new GeolocationService())->currentIpAddressIsOnList(
             collect(explode(',', $featureFlag->ip_addresses))
                 ->map(fn($ip) => trim($ip))
                 ->toArray(),
         );
+    }
+
+    private function bootCache(): void
+    {
+        if (app()->bound('feature-flag-cache')) {
+            return;
+        }
+
+        app()->singleton('feature-flag-cache', fn() => new Cache());
+    }
+
+    private function getFromCache(string $code): bool|null
+    {
+        return app('feature-flag-cache')->get($code);
+    }
+
+    private function putOnCache(string $code, bool $value): void
+    {
+        app('feature-flag-cache')->put($code, $value);
     }
 
     public function isRunningOnTwill(): bool

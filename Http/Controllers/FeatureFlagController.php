@@ -31,4 +31,6 @@ class FeatureFlagController extends ModuleController
             'sort' => true,
         ],
     ];
+
+    public $previewView = Templates::NO_PREVIEW;
 }

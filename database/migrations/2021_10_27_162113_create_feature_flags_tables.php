@@ -1,11 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateFeatureFlagsTables extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('feature_flags', function (Blueprint $table) {
             // this will create an id, a "published" column, and soft delete and timestamps columns
@@ -18,6 +19,8 @@ class CreateFeatureFlagsTables extends Migration
             $table->boolean('publicly_available')->default(false);
 
             $table->text('description')->nullable();
+
+            $table->text('ip_addresses')->nullable();
         });
 
         Schema::create('feature_flag_revisions', function (Blueprint $table) {
@@ -25,7 +28,7 @@ class CreateFeatureFlagsTables extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('feature_flag_revisions');
         Schema::dropIfExists('feature_flags');
