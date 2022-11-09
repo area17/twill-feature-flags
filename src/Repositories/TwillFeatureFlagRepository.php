@@ -3,6 +3,7 @@
 namespace A17\TwillFeatureFlags\Repositories;
 
 use Throwable;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use A17\Twill\Repositories\ModuleRepository;
 use A17\TwillFeatureFlags\Models\TwillFeatureFlag;
@@ -34,8 +35,7 @@ class TwillFeatureFlagRepository extends ModuleRepository
     public function getFeature(string $code): bool
     {
         try {
-            /** @var \A17\TwillFeatureFlags\Models\TwillFeatureFlag|null $featureFlag */
-            $featureFlag = FeatureFlag::where('code', $code)->first();
+            $featureFlag = TwillFeatureFlag::where('code', $code)->first();
         } catch (Throwable) {
             return false;
         }
@@ -58,9 +58,8 @@ class TwillFeatureFlagRepository extends ModuleRepository
 
     public function featureList(): array
     {
-        return $this->model
-            ->all()
-            ->filter(fn($feature) => $this->feature($feature->code))
+        return TwillFeatureFlag::all()
+            ->filter(fn(TwillFeatureFlag $feature) => $this->feature($feature->code))
             ->pluck('code')
             ->toArray();
     }
@@ -110,6 +109,19 @@ class TwillFeatureFlagRepository extends ModuleRepository
         $current = parse_url(url()->full());
         $twill = parse_url($twillUrlPrefix);
 
-        return $current['host'] === $twill['host'] && Str::startsWith($current['path'] ?? '/', $twill['path'] ?? '/');
+        return $this->url($current, 'host') === $this->url($twill, 'host') && Str::startsWith($this->url($current, 'path') ?? '/', $this->url($twill, 'path') ?? '/');
+    }
+
+    protected function url(array|bool $parsed, string $attribute): string|null
+    {
+        if ($parsed === false || !isset($parsed[$attribute])) {
+            return null;
+        }
+
+        if ($parsed === true) {
+            return null;
+        }
+
+        return $parsed[$attribute];
     }
 }

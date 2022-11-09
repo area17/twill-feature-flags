@@ -8,6 +8,7 @@ use A17\Twill\TwillPackageServiceProvider;
 
 class ServiceProvider extends TwillPackageServiceProvider
 {
+    /** @var bool $autoRegisterCapsules */
     protected $autoRegisterCapsules = false;
 
     public function boot(): void
