@@ -4,7 +4,12 @@
   "homepage": "https://github.com/area17/twill-capsule-feature-flags",
   "license": "MIT",
   "require": {
+    "php": ">=8.0",
     "area17/twill": "^2.7"
+  },
+  "require-dev": {
+      "nunomaduro/larastan": "^2.0",
+      "phpstan/phpstan": "^1.8"
   },
   "autoload": {
     "psr-4": {
@@ -17,6 +22,11 @@
         "A17\\TwillFeatureFlags\\ServiceProvider"
       ]
     }
+  },
+  "scripts": {
+      "post-autoload-dump": [
+          "npx husky install"
+      ]
   },
   "minimum-stability": "dev",
   "prefer-stable": true
