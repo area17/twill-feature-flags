@@ -2,6 +2,8 @@
 
 namespace A17\TwillFeatureFlags\Http\Controllers;
 
+use A17\Twill\Facades\TwillCapsules;
+use A17\Twill\Exceptions\NoCapsuleFoundException;
 use A17\Twill\Http\Controllers\Admin\ModuleController;
 
 class TwillFeatureFlagController extends ModuleController
@@ -32,5 +34,8 @@ class TwillFeatureFlagController extends ModuleController
         ],
     ];
 
-    // public $previewView = Templates::NO_PREVIEW;
+    protected function getViewPrefix(): ?string
+    {
+        return "resources.views.admin";
+    }
 }
