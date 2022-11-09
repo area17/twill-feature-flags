@@ -8,7 +8,10 @@
     "lint-staged": {
         "package.json": "sort-package-json",
         "**/*": "sh tools/linters.sh conflict-markers",
-        "**/*.php": "sh tools/linters.sh phpstan"
+        "**/*.php": [
+            "sh tools/linters.sh phpstan",
+            "sh tools/linters.sh prettify"
+        ]
     },
     "dependencies": {},
     "devDependencies": {

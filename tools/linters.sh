@@ -30,6 +30,10 @@ main() {
         prettier
     fi
 
+    if [ "$SERVICE" = "all" ] || [ "$SERVICE" = "prettier" ]; then
+        prettier
+    fi
+
     if [ "$SERVICE" = "all" ] || [ "$SERVICE" = "php-cs-fixer" ]; then
         phpCsFixer
     fi
