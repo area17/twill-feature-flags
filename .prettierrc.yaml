@@ -6,14 +6,10 @@ requirePragma: false
 insertPragma:
   false
 
-  ### VueJS
-vueIndentScriptAndStyle: true
-
 ### PHP
 phpVersion: "8.0"
 trailingCommaPHP: true
 braceStyle: psr-2
-sortTailwindcssClasses: true
 
 ### Pattern-specific
 overrides:
@@ -41,6 +37,3 @@ overrides:
     options:
       parser: "blade"
       printWidth: 120
-      wrapAttributes: "force-aligned"
-      sortHtmlAttributes: "code-guide"
-      sortTailwindcssClasses: true
