@@ -109,7 +109,8 @@ class TwillFeatureFlagRepository extends ModuleRepository
         $current = parse_url(url()->full());
         $twill = parse_url($twillUrlPrefix);
 
-        return $this->url($current, 'host') === $this->url($twill, 'host') && Str::startsWith($this->url($current, 'path') ?? '/', $this->url($twill, 'path') ?? '/');
+        return $this->url($current, 'host') === $this->url($twill, 'host') &&
+            Str::startsWith($this->url($current, 'path') ?? '/', $this->url($twill, 'path') ?? '/');
     }
 
     protected function url(array|bool $parsed, string $attribute): string|null

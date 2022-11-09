@@ -29,7 +29,7 @@ class Service
 
     public function currentIpAddressIsOnList(array $ipAddresses): bool
     {
-        if (empty($ipAddress = $this->ipAddress())) {
+        if (empty(($ipAddress = $this->ipAddress()))) {
             return false;
         }
 
