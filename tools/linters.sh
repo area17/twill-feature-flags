@@ -142,7 +142,7 @@ prettier() {
     checkExecutable "Prettier" $PRETTIER
 
     if [ "$FILES" = "." ]; then
-        if ! $PRETTIER --loglevel=error --quiet --write .; then
+        if ! $PRETTIER --loglevel=error --quiet --write src/; then
             fatalError "Prettier finished with errors"
         fi
     else

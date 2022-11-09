@@ -23,10 +23,9 @@ jobs:
         env:
             CI: true
 
-      - name: Prettify code
-        uses: creyD/prettier_action@v4.2
+      - name: Run prettier
+        run: yarn run prettier --write 'src/**/*.{css,js,vue}'
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          # This part is also where you can pass other options, for example:
-          prettier_options: --write src/**/**.php
-          only_changed: True
-          commit_message: "Prettify code"
+            commit_message: "Prettify code"

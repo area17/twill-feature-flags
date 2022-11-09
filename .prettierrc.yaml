@@ -13,27 +13,11 @@ braceStyle: psr-2
 
 ### Pattern-specific
 overrides:
-  - files:
-      - "*.js"
-      - "*.ts"
-      - "*.jsx"
-      - "*.tsx"
-      - "*.vue"
-    options:
-      singleQuote: true
-      semi: false
-      trailingComma: none
-  - files:
-      - "*.yml"
-      - "*.yaml"
-    options:
-      tabWidth: 2
-      singleQuote: false
-  - files: "*.php"
+  - files: "src/**/*.php"
     options:
       singleQuote: true
       printWidth: 120
-  - files: "*.blade.php"
+  - files: "src/**/*.blade.php"
     options:
       parser: "blade"
       printWidth: 120
