@@ -1,5 +1,5 @@
 {
-  "name": "area17/twill-capsule-feature-flags",
+  "name": "area17/twill-feature-flags",
   "description": "A Twill Capsule to handle application feature flags",
   "homepage": "https://github.com/area17/twill-capsule-feature-flags",
   "license": "MIT",
@@ -9,7 +9,8 @@
   },
   "require-dev": {
       "nunomaduro/larastan": "^2.0",
-      "phpstan/phpstan": "^1.8"
+      "phpstan/phpstan": "^1.8",
+    "orchestra/testbench": "^7.11"
   },
   "autoload": {
     "psr-4": {
