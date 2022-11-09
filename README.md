@@ -39,7 +39,7 @@ Load Capsule helpers by adding calling the loader to your AppServiceProvider:
  */
 public function register()
 {
-    A17\TwillFeatureFlags\Services\Helpers::load();
+    \A17\TwillFeatureFlags\Services\Helpers::load();
 }
 ```
 
