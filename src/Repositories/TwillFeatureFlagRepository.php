@@ -56,12 +56,19 @@ class TwillFeatureFlagRepository extends ModuleRepository
         return (new Collection(config('app.domains.publicly_available')))->contains(request()->getHost());
     }
 
-    public function featureList(): array
+    public function featureList(bool $all = false): array
     {
-        return TwillFeatureFlag::all()
-            ->filter(fn(TwillFeatureFlag $feature) => $this->feature($feature->code))
-            ->pluck('code')
-            ->toArray();
+        $features = TwillFeatureFlag::all();
+
+        if ($features->count() === 0) {
+            return [];
+        }
+
+        if (!$all) {
+            $features = $features->filter(fn(TwillFeatureFlag $feature) => $this->feature($feature->code));
+        }
+
+        return $features->pluck('code')->toArray();
     }
 
     private function isPubliclyAvailableToCurrentUser(TwillFeatureFlag $featureFlag): bool

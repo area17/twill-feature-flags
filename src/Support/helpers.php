@@ -10,8 +10,8 @@ if (!function_exists('feature')) {
 }
 
 if (!function_exists('feature_list')) {
-    function feature_list(): array
+    function feature_list(bool $all = false): array
     {
-        return (new TwillFeatureFlagRepository())->featureList();
+        return (new TwillFeatureFlagRepository())->featureList($all);
     }
 }

@@ -6,6 +6,6 @@ class Helpers
 {
     public static function load(): void
     {
-        require app_path('Twill/Capsules/FeatureFlags/Support/helpers.php');
+        require __DIR__ . '/../Support/helpers.php';
     }
 }
