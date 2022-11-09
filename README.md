@@ -60,7 +60,7 @@ Add a configuration to config/app.php, to set your public available domains
  
 Add the production domains list (comma separated) to your .env file:
 
-``` 
+``` dotenv
 PUBLICLY_AVAILABLE_DOMAINS=my-production-domain.com
 ```  
 
