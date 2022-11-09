@@ -24,7 +24,7 @@ class ServiceProvider extends TwillPackageServiceProvider
         TwillCapsules::registerPackageCapsule(
             Str::afterLast($namespace, '\\'),
             $namespace,
-            $this->getPackageDirectory().'/src'
+            $this->getPackageDirectory() . '/src',
         );
     }
 }

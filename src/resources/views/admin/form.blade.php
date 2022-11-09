@@ -2,30 +2,30 @@
 
 @section('contentFields')
     @formField('input', [
-        'label' => 'Code',
-        'name' => 'code',
-        'type' => 'text'
+    'label' => 'Code',
+    'name' => 'code',
+    'type' => 'text'
     ])
 
     @formField('checkbox', [
-        'name' => 'publicly_available',
-        'label' => 'Publicly available',
-    ])
-
-      @formField('input', [
-        'label' => 'IP Addresses',
-        'name' => 'ip_addresses',
-        'type' => 'text',
-        'note' => 'Use comma as a delimiter',
-        'label' => 'Publicly available to those IP addresses',
-        'rows' => 2,
-        'translated' => false,
+    'name' => 'publicly_available',
+    'label' => 'Publicly available',
     ])
 
     @formField('input', [
-        'label' => 'Description',
-        'name' => 'description',
-        'rows' => 4,
-        'type' => 'textarea'
+    'label' => 'IP Addresses',
+    'name' => 'ip_addresses',
+    'type' => 'text',
+    'note' => 'Use comma as a delimiter',
+    'label' => 'Publicly available to those IP addresses',
+    'rows' => 2,
+    'translated' => false,
+    ])
+
+    @formField('input', [
+    'label' => 'Description',
+    'name' => 'description',
+    'rows' => 4,
+    'type' => 'textarea'
     ])
 @stop

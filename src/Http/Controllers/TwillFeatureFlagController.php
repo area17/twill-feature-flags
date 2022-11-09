@@ -36,6 +36,6 @@ class TwillFeatureFlagController extends ModuleController
 
     protected function getViewPrefix(): ?string
     {
-        return "resources.views.admin";
+        return 'resources.views.admin';
     }
 }
