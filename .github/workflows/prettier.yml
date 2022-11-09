@@ -24,7 +24,7 @@ jobs:
             CI: true
 
       - name: Run prettier
-        run: yarn run prettier --write 'src/**/*.{css,js,vue}'
+        run: node_modules/.bin/prettier --write src/
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
