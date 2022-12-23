@@ -2,7 +2,7 @@
   "name": "area17/twill-feature-flags",
   "description": "A Twill Capsule to handle application feature flags",
   "homepage": "https://github.com/area17/twill-capsule-feature-flags",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "require": {
     "php": ">=8.0",
     "area17/twill": "^2.7|^3.0"
