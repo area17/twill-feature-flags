@@ -87,3 +87,12 @@ Or in Blade:
 ```
 
 Don't forget to add the feature flags to your navigation too.
+
+## Allow users logged in Twill option
+Your sessions must use a shared domain, otherwise your frontend will not have access to the Laravel session on the Twill and the option will be disabled: 
+
+```dotenv
+SESSION_DOMAIN=.laravel-twill-project.test
+```
+
+Make sure your sessions are working fine, when you switch to a shared domain they might break and a browser cookie clear might be needed.
