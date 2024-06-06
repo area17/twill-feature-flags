@@ -27,6 +27,12 @@ class TwillFeatureFlagController extends ModuleController
             'sort' => true,
         ],
 
+        'publicly_available_twill_users' => [
+            'title' => 'Publicly available for Twill users',
+            'field' => 'publicly_available_twill_users_yes_no',
+            'sort' => true,
+        ],
+
         'publicly_available_ips' => [
             'title' => 'Publicly available to (IPs)',
             'field' => 'publicly_available_ips',

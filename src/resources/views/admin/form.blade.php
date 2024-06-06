@@ -12,6 +12,11 @@
     'label' => 'Publicly available',
     ])
 
+    @formField('checkbox', [
+    'name' => 'publicly_available_twill_users',
+    'label' => 'Publicly available for users logged in Twill',
+    ])
+
     @formField('input', [
     'label' => 'IP Addresses',
     'name' => 'ip_addresses',

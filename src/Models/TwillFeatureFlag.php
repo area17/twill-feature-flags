@@ -14,12 +14,13 @@ use A17\Twill\Models\Behaviors\HasRevisions;
  * @property string $publicly_available_yes_no
  * @property string|null $publicly_available_ips
  * @property bool $published
+ * @property bool $publicly_available_twill_users
  */
 class TwillFeatureFlag extends Model
 {
     use HasRevisions;
 
-    protected $fillable = ['published', 'title', 'description', 'code', 'publicly_available', 'ip_addresses'];
+    protected $fillable = ['published', 'title', 'description', 'code', 'publicly_available', 'ip_addresses', 'publicly_available_twill_users'];
 
     /**
      * Save the model to the database.
@@ -37,6 +38,11 @@ class TwillFeatureFlag extends Model
     public function getPubliclyAvailableYesNoAttribute(): string
     {
         return $this->publicly_available ? 'Yes' : '';
+    }
+
+    public function getPubliclyAvailableTwillUsersYesNoAttribute(): string
+    {
+        return $this->publicly_available_twill_users ? 'Yes' : '';
     }
 
     public function getPubliclyAvailableIpsAttribute(): string|null

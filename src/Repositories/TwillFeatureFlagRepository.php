@@ -73,11 +73,8 @@ class TwillFeatureFlagRepository extends ModuleRepository
 
     private function isPubliclyAvailableToCurrentUser(TwillFeatureFlag $featureFlag): bool
     {
-        return (new GeolocationService())->currentIpAddressIsOnList(
-            collect(explode(',', $featureFlag->ip_addresses))
-                ->map(fn($ip) => trim($ip))
-                ->toArray(),
-        );
+        return $this->isPubliclyAvailableToIpAddresses($featureFlag) ||
+               $this->isPubliclyAvailableToTwillUsers($featureFlag);
     }
 
     private function bootCache(): void
@@ -131,5 +128,28 @@ class TwillFeatureFlagRepository extends ModuleRepository
         }
 
         return $parsed[$attribute];
+    }
+
+    public function isPubliclyAvailableToIpAddresses(TwillFeatureFlag $featureFlag): bool
+    {
+        if (blank($featureFlag->ip_addresses)) {
+            return false;
+        }
+
+        return (new GeolocationService())->currentIpAddressIsOnList(
+            collect(explode(',', $featureFlag->ip_addresses))
+                ->map(fn($ip) => trim($ip))
+                ->toArray(),
+        );
+    }
+
+    public function isPubliclyAvailableToTwillUsers(TwillFeatureFlag $featureFlag): bool
+    {
+        if (!$featureFlag->publicly_available_twill_users) {
+            return false;
+        }
+
+        // Is the user authenticated on Twill?
+        return auth('twill_users')->check();
     }
 }
