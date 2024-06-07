@@ -6,7 +6,6 @@ use Illuminate\Support\Str;
 use A17\Twill\Facades\TwillCapsules;
 use A17\Twill\TwillPackageServiceProvider;
 use A17\TwillFeatureFlags\Services\Helpers;
-use A17\TwillFeatureFlags\Support\TwillFeatureFlags;
 
 class ServiceProvider extends TwillPackageServiceProvider
 {
@@ -31,7 +30,5 @@ class ServiceProvider extends TwillPackageServiceProvider
             $namespace,
             $this->getPackageDirectory() . '/src',
         );
-
-        app()->singleton(TwillFeatureFlags::class, fn() => new TwillFeatureFlags());
     }
 }

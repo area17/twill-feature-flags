@@ -40,7 +40,7 @@ class TwillFeatureFlagRepository extends ModuleRepository
             return false;
         }
 
-        if (blank($featureFlag) || blank($featureFlag?->published) || $featureFlag?->published === false) {
+        if (blank($featureFlag) || blank($featureFlag->published) || $featureFlag->published === false) {
             return false;
         }
 
@@ -74,7 +74,7 @@ class TwillFeatureFlagRepository extends ModuleRepository
     private function isPubliclyAvailableToCurrentUser(TwillFeatureFlag $featureFlag): bool
     {
         return $this->isPubliclyAvailableToIpAddresses($featureFlag) ||
-               $this->isPubliclyAvailableToTwillUsers($featureFlag);
+            $this->isPubliclyAvailableToTwillUsers($featureFlag);
     }
 
     private function bootCache(): void
