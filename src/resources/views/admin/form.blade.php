@@ -1,9 +1,5 @@
 @extends('twill::layouts.form')
 
-@php
-    $allowUsersInTwill = filled(config('session_domain'));
-@endphp
-
 @section('contentFields')
     @formField('input', [
     'label' => 'Code',
@@ -16,7 +12,7 @@
     'label' => 'Publicly available',
     ])
 
-    @if($allowUsersInTwill)
+    @if(features_can_be_public_on_twill())
         @formField('checkbox', [
         'name' => 'publicly_available_twill_users',
         'label' => 'Publicly available for users logged in Twill',

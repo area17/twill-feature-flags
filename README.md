@@ -89,10 +89,13 @@ Or in Blade:
 Don't forget to add the feature flags to your navigation too.
 
 ## Allow users logged in Twill option
-Your sessions must use a shared domain, otherwise your frontend will not have access to the Laravel session on the Twill and the option will be disabled: 
+You can allow your users to have access to a feature in public available domains if they are logged in on Twill. But there are some caveats for it to work:
+
+- Twill must be int he same domain of the web application, meaning that ADMIN_APP_URL must be empty or have the same domain as the frontend; or
+- The Laravel session domain should set in order for the apps to share the session cookie:
 
 ```dotenv
 SESSION_DOMAIN=.laravel-twill-project.test
 ```
 
-Make sure your sessions are working fine, when you switch to a shared domain they might break and a browser cookie clear might be needed.
+Also, make sure your sessions are working fine, when you switch to a shared domain they might break and a browser cookie clear might be needed.
