@@ -14,6 +14,10 @@ class TwillFeatureFlagRepository extends ModuleRepository
 {
     use HandleRevisions;
 
+    protected $relatedBrowsers = [
+        'allowed_twill_users' => ['moduleName' => 'users', 'relation' => 'allowed_twill_users'],
+    ];
+
     public function __construct(TwillFeatureFlag $model = null)
     {
         $this->bootCache();
@@ -53,7 +57,8 @@ class TwillFeatureFlagRepository extends ModuleRepository
 
     private function isRealProduction(): bool
     {
-        return (new Collection(config('app.domains.publicly_available')))->contains(request()->getHost());
+        return app()->environment('production') &&
+            (new Collection(config('app.domains.publicly_available')))->contains(request()->getHost());
     }
 
     public function featureList(bool $all = false): array
@@ -149,7 +154,8 @@ class TwillFeatureFlagRepository extends ModuleRepository
             return false;
         }
 
-        // Is the user authenticated on Twill?
-        return auth('twill_users')->check();
+        $auth = auth('twill_users');
+
+        return $auth->check() && $featureFlag->userIsPubliclyAllowed($auth->user());
     }
 }

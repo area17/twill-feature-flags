@@ -4,7 +4,9 @@ namespace A17\TwillFeatureFlags\Models;
 
 use A17\Twill\Models\Model;
 use Illuminate\Support\Str;
+use A17\Twill\Models\Behaviors\HasRelated;
 use A17\Twill\Models\Behaviors\HasRevisions;
+use Illuminate\Foundation\Auth\User as AuthenticatableContract;
 
 /**
  * @property string $code
@@ -18,9 +20,18 @@ use A17\Twill\Models\Behaviors\HasRevisions;
  */
 class TwillFeatureFlag extends Model
 {
+    use HasRelated;
     use HasRevisions;
 
-    protected $fillable = ['published', 'title', 'description', 'code', 'publicly_available', 'ip_addresses', 'publicly_available_twill_users'];
+    protected $fillable = [
+        'published',
+        'title',
+        'description',
+        'code',
+        'publicly_available',
+        'ip_addresses',
+        'publicly_available_twill_users',
+    ];
 
     /**
      * Save the model to the database.
@@ -48,5 +59,31 @@ class TwillFeatureFlag extends Model
     public function getPubliclyAvailableIpsAttribute(): string|null
     {
         return $this->ip_addresses ?? null;
+    }
+
+    public function userIsPubliclyAllowed(AuthenticatableContract|null $user): bool
+    {
+        if ($user === null) {
+            return false;
+        }
+
+        /** @phpstan-ignore-next-line */
+        if ($user->published === false) {
+            return false;
+        }
+
+        /** @phpstan-ignore-next-line */
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        $allowedUsers = $this->getRelated('allowed_twill_users');
+
+        if ($allowedUsers->isEmpty()) {
+            return true;
+        }
+
+        /** @phpstan-ignore-next-line */
+        return $allowedUsers->pluck('email')->contains($user->email);
     }
 }
