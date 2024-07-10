@@ -5,6 +5,7 @@ namespace A17\TwillFeatureFlags;
 use Illuminate\Support\Str;
 use A17\Twill\Facades\TwillCapsules;
 use A17\Twill\TwillPackageServiceProvider;
+use A17\TwillFeatureFlags\Services\Helpers;
 
 class ServiceProvider extends TwillPackageServiceProvider
 {
@@ -14,6 +15,8 @@ class ServiceProvider extends TwillPackageServiceProvider
     public function boot(): void
     {
         $this->registerThisCapsule();
+
+        Helpers::load();
 
         parent::boot();
     }

@@ -6,6 +6,6 @@ class Helpers
 {
     public static function load(): void
     {
-        require __DIR__ . '/../Support/helpers.php';
+        require_once __DIR__ . '/../Support/helpers.php';
     }
 }

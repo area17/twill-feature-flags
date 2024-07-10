@@ -9,12 +9,10 @@ parameters:
 
     excludePaths:
 
-    checkMissingIterableValueType: false
-
     universalObjectCratesClasses:
 
     ignoreErrors:
+        - identifier: missingType.generics
+        - identifier: missingType.iterableValue
 
     reportUnmatchedIgnoredErrors: false
-
-    checkGenericClassInNonGenericObjectType: false

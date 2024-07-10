@@ -14,6 +14,10 @@ class TwillFeatureFlagRepository extends ModuleRepository
 {
     use HandleRevisions;
 
+    protected $relatedBrowsers = [
+        'allowed_twill_users' => ['moduleName' => 'users', 'relation' => 'allowed_twill_users'],
+    ];
+
     public function __construct(TwillFeatureFlag $model = null)
     {
         $this->bootCache();
@@ -40,7 +44,7 @@ class TwillFeatureFlagRepository extends ModuleRepository
             return false;
         }
 
-        if (blank($featureFlag) || blank($featureFlag?->published) || $featureFlag?->published === false) {
+        if (blank($featureFlag) || blank($featureFlag->published) || $featureFlag->published === false) {
             return false;
         }
 
@@ -53,7 +57,8 @@ class TwillFeatureFlagRepository extends ModuleRepository
 
     private function isRealProduction(): bool
     {
-        return (new Collection(config('app.domains.publicly_available')))->contains(request()->getHost());
+        return app()->environment('production') &&
+            (new Collection(config('app.domains.publicly_available')))->contains(request()->getHost());
     }
 
     public function featureList(bool $all = false): array
@@ -73,11 +78,8 @@ class TwillFeatureFlagRepository extends ModuleRepository
 
     private function isPubliclyAvailableToCurrentUser(TwillFeatureFlag $featureFlag): bool
     {
-        return (new GeolocationService())->currentIpAddressIsOnList(
-            collect(explode(',', $featureFlag->ip_addresses))
-                ->map(fn($ip) => trim($ip))
-                ->toArray(),
-        );
+        return $this->isPubliclyAvailableToIpAddresses($featureFlag) ||
+            $this->isPubliclyAvailableToTwillUsers($featureFlag);
     }
 
     private function bootCache(): void
@@ -131,5 +133,29 @@ class TwillFeatureFlagRepository extends ModuleRepository
         }
 
         return $parsed[$attribute];
+    }
+
+    public function isPubliclyAvailableToIpAddresses(TwillFeatureFlag $featureFlag): bool
+    {
+        if (blank($featureFlag->ip_addresses)) {
+            return false;
+        }
+
+        return (new GeolocationService())->currentIpAddressIsOnList(
+            collect(explode(',', $featureFlag->ip_addresses))
+                ->map(fn($ip) => trim($ip))
+                ->toArray(),
+        );
+    }
+
+    public function isPubliclyAvailableToTwillUsers(TwillFeatureFlag $featureFlag): bool
+    {
+        if (!$featureFlag->publicly_available_twill_users) {
+            return false;
+        }
+
+        $auth = auth('twill_users');
+
+        return $auth->check() && $featureFlag->userIsPubliclyAllowed($auth->user());
     }
 }
